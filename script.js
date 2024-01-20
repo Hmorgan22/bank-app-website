@@ -37,26 +37,26 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-//create DOM element
-const header = document.querySelector('.header');
-const message = document.createElement('div');
-//add attributes
-message.classList.add('cookie-message');
-//create HTML to be added
-message.innerHTML =
-  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
-//add CSS styles
-message.style.backgroundColor = '#37383d';
-header.append(message);
-//select the button to close on press
-document
-  .querySelector('.btn--close-cookie')
-  .addEventListener('click', function () {
-    message.remove();
-  });
+// //create cookie message
+// const header = document.querySelector('.header');
+// const message = document.createElement('div');
+// //add attributes
+// message.classList.add('cookie-message');
+// //create HTML to be added
+// message.innerHTML =
+//   'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
+// //add CSS styles
+// message.style.backgroundColor = '#37383d';
+// header.append(message);
+// //select the button to close on press
+// document
+//   .querySelector('.btn--close-cookie')
+//   .addEventListener('click', function () {
+//     message.remove();
+//   });
 
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+// message.style.height =
+//   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
 
 btnScrollTo.addEventListener('click', function (e) {
   e.preventDefault();
@@ -155,7 +155,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden'); -----------------------Remove this
 });
 
 //Lazy loading images
@@ -179,3 +179,40 @@ const imgObserver = new IntersectionObserver(loadImg, {
 });
 
 imgTarget.forEach(img => imgObserver.observe(img));
+
+//slider
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
+let curSlide = 0;
+const maxSlide = slides.length;
+
+function goToSlide(slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+  );
+}
+
+//center slides
+goToSlide(0);
+
+//slide to right
+btnRight.addEventListener('click', function () {
+  if (curSlide === maxSlide - 1) {
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+  goToSlide(curSlide);
+});
+
+//slide to left
+btnLeft.addEventListener('click', function () {
+  if (curSlide === 0) {
+    curSlide = maxSlide - 1;
+  } else {
+    curSlide--;
+  }
+  goToSlide(curSlide);
+});
